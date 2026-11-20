@@ -1,0 +1,460 @@
+/* Variables */
+:root {
+  color-scheme: light;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+
+  --color-paper: #fffdf7;
+  --color-paper-deep: #f8f4e6;
+  --color-ink: #1e242b;
+  --color-border: #2b303a;
+  --color-muted: #59616b;
+  --color-page: #e8eee4;
+  --color-white: #ffffff;
+
+  --color-spicy: #b73535;
+  --color-dry: #17618a;
+  --color-sweet: #a21d62;
+  --color-bitter: #24633b;
+  --color-sour: #755000;
+  --color-neutral: #424a56;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-pill: 999px;
+
+  --shadow-hard: 4px 4px 0 var(--color-border);
+  --shadow-hard-small: 2px 2px 0 var(--color-border);
+  --focus-ring: 0 0 0 3px var(--color-paper), 0 0 0 6px #17618a;
+}
+
+/* Base / Typography */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 20rem;
+  min-height: 100%;
+  background: var(--color-page);
+}
+
+body {
+  width: min(100% - 2rem, 76rem);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 4rem) 0;
+  color: var(--color-ink);
+  line-height: 1.5;
+  background:
+    radial-gradient(ellipse at 10% 0%, rgb(255 255 255 / 70%), transparent 34rem),
+    var(--color-page);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  width: fit-content;
+  margin: 0 auto var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  border: 3px double var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-paper);
+  box-shadow: var(--shadow-hard);
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  font-weight: 900;
+  letter-spacing: 0.025em;
+  line-height: 1.25;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.pixel,
+.berry-id,
+.stat-value,
+.berry-number {
+  font-family: "Courier New", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* Layout & Grid */
+#berriesList,
+.berry-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Berry Cards */
+#berriesList > li,
+.berry-card {
+  position: relative;
+  min-width: 0;
+  padding: var(--space-5);
+  overflow: hidden;
+  border: 3px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: 1px solid var(--color-border);
+  outline-offset: -8px;
+  background: linear-gradient(145deg, var(--color-paper), var(--color-paper-deep));
+  box-shadow: var(--shadow-hard);
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+#berriesList > li::before,
+.berry-card::before {
+  display: grid;
+  width: 3rem;
+  aspect-ratio: 1;
+  margin-bottom: var(--space-3);
+  place-items: center;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  background: #f6c94b;
+  box-shadow: var(--shadow-hard-small);
+  content: "●";
+  color: #b73535;
+  font-size: 1.2rem;
+  line-height: 1;
+  text-shadow: 0.08em 0.08em 0 #fff;
+}
+
+#berriesList > li > p,
+.berry-name {
+  color: var(--color-ink);
+  font-size: 1.15rem;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+  text-transform: capitalize;
+}
+
+.berry-card__header,
+.berry-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.berry-card__icon,
+.berry-sprite {
+  display: grid;
+  flex: 0 0 auto;
+  width: 3.5rem;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-paper);
+  box-shadow: var(--shadow-hard-small);
+  object-fit: contain;
+}
+
+.berry-id,
+.berry-number {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: #e9e4d4;
+  color: var(--color-ink);
+  font-size: 0.75rem;
+}
+
+.berry-card__details,
+.berry-details {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.berry-card:hover,
+.berry-card:focus-within,
+#berriesList > li:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--color-border);
+}
+
+.berry-card:active,
+#berriesList > li:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--color-border);
+}
+
+/* Flavor & Stat Badges */
+.flavor-list,
+.berry-flavors,
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.flavor,
+.flavor-badge,
+.badge {
+  display: inline-flex;
+  min-height: 1.75rem;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.2rem 0.65rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-neutral);
+  color: var(--color-white);
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+
+.flavor--spicy,
+.flavor-spicy,
+.badge--spicy {
+  background: var(--color-spicy);
+}
+
+.flavor--dry,
+.flavor-dry,
+.badge--dry {
+  background: var(--color-dry);
+}
+
+.flavor--sweet,
+.flavor-sweet,
+.badge--sweet {
+  background: var(--color-sweet);
+}
+
+.flavor--bitter,
+.flavor-bitter,
+.badge--bitter {
+  background: var(--color-bitter);
+}
+
+.flavor--sour,
+.flavor-sour,
+.badge--sour {
+  background: var(--color-sour);
+}
+
+.badge--rarity,
+.badge--growth,
+.badge--firmness {
+  background: var(--color-ink);
+}
+
+.berry-stats,
+.stat-list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.berry-stat,
+.stat {
+  display: grid;
+  grid-template-columns: minmax(6rem, 0.8fr) minmax(0, 1.5fr) auto;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.berry-stat dt,
+.stat-label {
+  font-weight: 700;
+}
+
+.berry-stat dd {
+  display: contents;
+  margin: 0;
+}
+
+.stat-meter,
+.berry-stat progress {
+  width: 100%;
+  height: 0.75rem;
+  overflow: hidden;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: #e1ddcf;
+  accent-color: var(--stat-color, #24633b);
+}
+
+.stat-meter::-webkit-progress-bar {
+  background: #e1ddcf;
+}
+
+.stat-meter::-webkit-progress-value {
+  background: var(--stat-color, #24633b);
+}
+
+.stat-meter::-moz-progress-bar {
+  background: var(--stat-color, #24633b);
+}
+
+.stat-value {
+  min-width: 3rem;
+  color: var(--color-ink);
+  font-size: 0.75rem;
+  text-align: end;
+}
+
+.stat--spicy {
+  --stat-color: var(--color-spicy);
+}
+
+.stat--dry {
+  --stat-color: var(--color-dry);
+}
+
+.stat--sweet {
+  --stat-color: var(--color-sweet);
+}
+
+.stat--bitter {
+  --stat-color: var(--color-bitter);
+}
+
+.stat--sour {
+  --stat-color: var(--color-sour);
+}
+
+/* Controls / Filters */
+.berry-controls,
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.search-input,
+.berry-search,
+.filter-select {
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font: inherit;
+}
+
+.filter-chip,
+.filter-button,
+.berry-controls button,
+.filter-bar button {
+  min-height: 2.5rem;
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-paper);
+  box-shadow: var(--shadow-hard-small);
+  color: var(--color-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 800;
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+
+.filter-chip[aria-pressed="true"],
+.filter-button[aria-pressed="true"],
+.filter-chip.is-active,
+.filter-button.is-active {
+  background: #f6c94b;
+}
+
+.filter-chip:hover,
+.filter-button:hover,
+.berry-controls button:hover,
+.filter-bar button:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 4px 0 var(--color-border);
+}
+
+.filter-chip:active,
+.filter-button:active,
+.berry-controls button:active,
+.filter-bar button:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0 var(--color-border);
+}
+
+:where(a, button, input, select, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Responsive & Reduced Motion */
+@media (min-width: 38rem) {
+  #berriesList,
+  .berry-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 60rem) {
+  #berriesList,
+  .berry-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 78rem) {
+  #berriesList,
+  .berry-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 27rem) {
+  body {
+    width: min(100% - 1.25rem, 76rem);
+  }
+
+  #berriesList > li,
+  .berry-card {
+    padding: var(--space-4);
+  }
+
+  .berry-stat,
+  .stat {
+    grid-template-columns: minmax(5rem, 0.8fr) minmax(3rem, 1fr) auto;
+    font-size: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
